@@ -1,5 +1,3 @@
-// import { LocateIcon, Mail, Phone } from "lucide-react";
-
 export const navItems = [
   {
     title: "Home",
@@ -44,10 +42,10 @@ export const companyLinks = [
 ];
 
 export const ContactUsLinks = [
-  { href: "#", text: "info@finwel.com" },
-  { href: "#", text: "+1-547-535-878" },
-  { href: "#", text: "+1-547-535-878" },
-  { href: "#", text: "2525 N ORANGE ST. 4TH FLOOR 535 Texas, USA-62621" },
+  { href: "#", text: "info@finwel.com", icon: "Mail" },
+  { href: "#", text: "+1-547-535-878", icon: "Phone" },
+  { href: "#", text: "+1-547-535-878", icon: "Phone" },
+  { href: "#", text: "2525 N ORANGE ST. 4TH FLOOR 535 Texas, USA-62621", icon: "MapPin" },
 ];
 
 export const faqData = [

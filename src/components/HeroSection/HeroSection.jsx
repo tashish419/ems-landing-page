@@ -1,4 +1,5 @@
 import { ArrowRight, PieChart, DollarSign, TrendingUp, Shield, Zap, User } from "lucide-react";
+import PropTypes from 'prop-types';
 
 const HeroSection = () => {
   return (
@@ -10,7 +11,7 @@ const HeroSection = () => {
               AI-Powered Financial Insights at Your Fingertips
             </h1>
             <p className="text-xl ss:text-2xl mb-6 text-orange-200">
-              Unlock your financial potential with Finwell's cutting-edge AI
+              Unlock your financial potential with Finwell&apos;s cutting-edge AI
               technology
             </p>
             <div className="flex flex-col xs:flex-row space-y-4 xs:space-y-0 xs:space-x-4">
@@ -81,3 +82,14 @@ const ReasonCard = ({ icon, title, description }) => {
 };
 
 export default HeroSection;
+
+ReasonCard.propTypes = {
+  icon: PropTypes.node.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+};
+
+FeatureCard.propTypes ={
+  icon: PropTypes.node.isRequired,
+  title: PropTypes.string.isRequired,
+}
