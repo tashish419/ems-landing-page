@@ -16,7 +16,7 @@ export const navItems = [
   {
     title: "Pricing",
     href: "#",
-  }
+  },
 ];
 
 export const resourcesLinks = [
@@ -48,4 +48,23 @@ export const ContactUsLinks = [
   { href: "#", text: "+1-547-535-878" },
   { href: "#", text: "+1-547-535-878" },
   { href: "#", text: "2525 N ORANGE ST. 4TH FLOOR 535 Texas, USA-62621" },
+];
+
+export const faqData = [
+  {
+    id: 1,
+    question: "What is Finwell?",
+    answer:
+      "Finwell is a financial management platform that uses AI technology to provide personalized insights and advice to help you make better financial decisions.",
+  },
+  {
+    id: 2,
+    question: "What is React?",
+    answer: "React is a JavaScript library for building user interfaces.",
+  },
+  {
+    id: 3,
+    question: "How do I use this FAQ?",
+    answer: "Click on a question to view its answer.",
+  },
 ];
