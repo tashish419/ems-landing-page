@@ -15,6 +15,10 @@ const Header = () => {
     window.location.href = "/login";
   };
 
+  const handleSignup = () => {
+    window.location.href = "/signup";
+  }
+
   return (
     <nav className="sticky top-0 z-50 py-2 bg-gray-900 bg-opacity-90 backdrop-blur-lg border-b border-orange-800/30">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 flex justify-between items-center">
@@ -42,7 +46,7 @@ const Header = () => {
            className="py-2 px-4 bg-orange-500 rounded-full text-gray-900 font-semibold hover:bg-orange-400 transition duration-300">
             Log In
           </button>
-          <button className="py-2 px-4 border border-orange-500 text-orange-400 rounded-full hover:bg-orange-500 hover:text-gray-900 transition duration-300">
+          <button onClick={handleSignup} className="py-2 px-4 border border-orange-500 text-orange-400 rounded-full hover:bg-orange-500 hover:text-gray-900 transition duration-300">
             Sign Up
           </button>
         </div>
@@ -88,7 +92,7 @@ const Header = () => {
                 <button onClick={handleLogin} className="w-full py-2 px-4 bg-orange-500 rounded-full text-gray-900 font-semibold hover:bg-orange-400 transition duration-300">
                   Log In
                 </button>
-                <button className="w-full py-2 px-4 border border-orange-500 text-orange-400 rounded-full hover:bg-orange-500 hover:text-gray-900 transition duration-300">
+                <button onClick={handleSignup} className="w-full py-2 px-4 border border-orange-500 text-orange-400 rounded-full hover:bg-orange-500 hover:text-gray-900 transition duration-300">
                   Sign Up
                 </button>
               </div>
