@@ -66,3 +66,19 @@ export const faqData = [
     answer: "Click on a question to view its answer.",
   },
 ];
+
+export const errorMessages = {
+  "auth/user-not-found":
+    "No account found with this email address. Please sign up first.",
+  "auth/wrong-password": "Incorrect password. Please try again.",
+  "auth/invalid-email":
+    "The email address is not valid. Please enter a valid email.",
+  "auth/user-disabled":
+    "This account has been disabled. Please contact support.",
+  "auth/too-many-requests":
+    "Too many login attempts. Please try again later.",
+  "auth/network-request-failed":
+    "Network error. Please check your internet connection.",
+};
+
+export const AVATAR_URL = "https://www.gravatar.com/avatar/000?d=mp";

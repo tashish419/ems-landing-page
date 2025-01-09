@@ -1,8 +1,11 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { validateEmailAndPassword } from "../../utils/validate";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../config/firebase";
+import { AVATAR_URL, errorMessages } from "../../constants";
+import { useDispatch } from "react-redux";
+import { addUser } from "../../utils/store/authSlice";
 
 const SignUpForm = () => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -10,13 +13,14 @@ const SignUpForm = () => {
   const lastNameRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const dispatch = useDispatch();
 
   const handleSignUpSubmit = (e) => {
     e.preventDefault();
-    const firstName = firstNameRef.current.value;
-    const lastName = lastNameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
+    const firstName = firstNameRef.current.value;
+    const lastName = lastNameRef.current.value;
 
     const message = validateEmailAndPassword(email, password);
     if (message) {
@@ -27,15 +31,26 @@ const SignUpForm = () => {
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        //Signed Up
         const user = userCredential.user;
-        console.log("user info", user);
+        // console.log("user info", user);
+        updateProfile(user, {
+          displayName: `${firstName} ${lastName}`,
+          photoURL: AVATAR_URL,
+        })
+          .then(() => {
+            const { displayName, email, uid, photoURL } = auth.currentUser;
+            // dispatching the user to the store
+            dispatch(addUser({ displayName, email, uid, photoURL }));
+          })
+          .catch((error) => {
+            setErrorMessage(error.message);
+          });
       })
       .catch((error) => {
         const errorCode = error.code;
-        console.log("error code",errorCode);
-        const errorMessage = error.message;
-        console.log(errorMessage);    
+        const userFriendlyMessage = errorMessages[errorCode] || error.message;
+        console.error("Error:", userFriendlyMessage);
+        setErrorMessage(userFriendlyMessage);
       });
   };
 

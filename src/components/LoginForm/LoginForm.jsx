@@ -1,20 +1,25 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { validateEmailAndPassword } from "../../utils/validate";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../config/firebase";
+import { errorMessages } from "../../constants";
+import { useDispatch } from "react-redux";
+import { addUser } from "../../utils/store/authSlice";
 
 const LoginForm = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const email = emailRef.current.value;
+    const emailId = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    const message = validateEmailAndPassword(email, password);
+    const message = validateEmailAndPassword(emailId, password);
     // console.log("error message", message);
     if (message) {
       setErrorMessage(message);
@@ -23,22 +28,37 @@ const LoginForm = () => {
       setErrorMessage(null);
     }
 
-    login(email, password);
+    login(emailId, password);
   };
 
-  const login = async (email, password) => {
+  const login = async (emailId, password) => {
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        emailId,
+        password
+      );
       const user = userCredential.user;
+      const {displayName, email, uid, photoURL} = user;
+
+      // dispatching the user to the store
+      dispatch(addUser({
+        displayName,
+        email,
+        uid,
+        photoURL
+      }))
+      navigate(`/${user.displayName || "guest"}/dashboard`);
       console.log("user info", user);
     } catch (error) {
       const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log("error code", errorCode);
-      console.log("error message", errorMessage);
-      setErrorMessage(errorMessage);
+      const userFriendlyMessage =
+        errorMessages[errorCode] ||
+        error.message;
+      console.error("Error:", userFriendlyMessage);
+      setErrorMessage(userFriendlyMessage);
     }
-  }
+  };
 
   return (
     <div className="bg-gray-800 p-8 rounded-lg shadow-md min-w-[25%] relative">
