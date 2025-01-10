@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { Home, PieChart, User, Settings, HelpCircle } from 'lucide-react';
 import PropTypes from 'prop-types';
 
-const Sidebar = ({storeName}) => {
+const Sidebar = () => {
   const navItems = [
     { icon: Home, text: 'Home', to: '' },
     { icon: PieChart, text: 'Analytics', to: 'analytics' },
@@ -13,9 +13,6 @@ const Sidebar = ({storeName}) => {
 
   return (
     <div className="flex flex-col w-64 bg-gray-800 border-r border-orange-800/30">
-      {/* <div className="flex items-center justify-center h-16 bg-gray-900">
-        <span className="text-orange-400 text-2xl font-bold">{storeName}</span>
-      </div> */}
       <div className="flex flex-col flex-1 overflow-y-auto">
         <nav className="flex-1 px-2 py-4 space-y-2">
           {navItems.map((item, index) => (
@@ -40,10 +37,9 @@ const Sidebar = ({storeName}) => {
     </div>
   );
 };
+
 Sidebar.propTypes = {
   storeName: PropTypes.string.isRequired,
 };
 
 export default Sidebar;
-
-
