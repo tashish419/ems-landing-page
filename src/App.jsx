@@ -1,27 +1,24 @@
 import { useEffect, useState } from "react";
-import { Dashboard, Footer, Header } from "./components";
-import { Route, Routes } from "react-router-dom";
-import Home from "./pages/Home/Home";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Login from "./pages/Login/Login";
-import Signup from "./pages/Signup/Signup";
+import { Footer, Header } from "./components";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebase";
 import { useDispatch } from "react-redux";
-import { addUser, clearUser } from "./utils/store/authSlice";
+import { addUser, clearUser } from "./store/authSlice";
 import { AVATAR_URL } from "./constants";
-// import ProtectedRoute from "./components/ProtectedRoute";
+import AppRoutes from "./routes/AppRoutes";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const { isLoading, setIsLoading } = useState(true);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { displayName, email, uid, photoURL } = user;
         // dispatching the user to the store
+        console.log("user info", user);
         dispatch(
           addUser({
             displayName: displayName || "guest",
@@ -30,6 +27,7 @@ function App() {
             photoURL: photoURL || AVATAR_URL,
           })
         );
+        navigate(`/${(displayName || "guest").replace(/\s+/g, "")}/dashboard`);
       } else {
         dispatch(clearUser());
       }
@@ -46,21 +44,7 @@ function App() {
     <div className="min-h-screen">
       <Header />
       <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route
-            path="/:storename/dashboard"
-            element={
-              // <ProtectedRoute>
-                <Dashboard />
-              // </ProtectedRoute>
-            }
-          />
-        </Routes>
+        <AppRoutes />
       </main>
       <Footer />
     </div>

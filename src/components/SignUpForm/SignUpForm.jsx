@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../config/firebase";
 import { AVATAR_URL, errorMessages } from "../../constants";
 import { useDispatch } from "react-redux";
-import { addUser } from "../../utils/store/authSlice";
+import { addUser } from "../../store/authSlice";
 
 const SignUpForm = () => {
   const [errorMessage, setErrorMessage] = useState(null);

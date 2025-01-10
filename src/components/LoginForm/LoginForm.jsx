@@ -4,14 +4,12 @@ import { validateEmailAndPassword } from "../../utils/validate";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../config/firebase";
 import { errorMessages } from "../../constants";
-import { useDispatch } from "react-redux";
-import { addUser } from "../../utils/store/authSlice";
 
 const LoginForm = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -39,17 +37,8 @@ const LoginForm = () => {
         password
       );
       const user = userCredential.user;
-      const {displayName, email, uid, photoURL} = user;
-
-      // dispatching the user to the store
-      dispatch(addUser({
-        displayName,
-        email,
-        uid,
-        photoURL
-      }))
-      navigate(`/${user.displayName || "guest"}/dashboard`);
-      console.log("user info", user);
+      navigate(`/${(user.displayName || "guest").replace(/\s+/g, "")}/dashboard`);
+      // console.log("user info", user);
     } catch (error) {
       const errorCode = error.code;
       const userFriendlyMessage =

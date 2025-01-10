@@ -1,4 +1,5 @@
-import { SignUpForm } from '../../components';
+import { SignUpForm } from "../components";
+
 
 const Signup = () => {
   return (
